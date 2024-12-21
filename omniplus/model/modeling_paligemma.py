@@ -3,9 +3,10 @@ import json
 import os
 from typing import Tuple
 
-from modeling_gemma import PaliGemmaConfig, PaliGemmaForConditionalGeneration
 from safetensors import safe_open
 from transformers import AutoTokenizer
+
+from omniplus.model.modeling_gemma import PaliGemmaConfig, PaliGemmaForConditionalGeneration
 
 
 def load_hf_model(model_path: str, device: str) -> Tuple[PaliGemmaForConditionalGeneration, AutoTokenizer]:
