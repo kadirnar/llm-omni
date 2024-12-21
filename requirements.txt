@@ -1,0 +1,7 @@
+torch
+transformers
+huggingface-hub
+pillow
+fire
+tqdm
+termcolor

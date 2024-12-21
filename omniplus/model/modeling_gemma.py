@@ -2,9 +2,10 @@ import math
 from typing import List, Optional, Tuple
 
 import torch
-from modeling_siglip import SiglipVisionConfig, SiglipVisionModel
 from torch import nn
 from torch.nn import CrossEntropyLoss
+
+from omniplus.model.modeling_siglip import SiglipVisionConfig, SiglipVisionModel
 
 
 class KVCache():
