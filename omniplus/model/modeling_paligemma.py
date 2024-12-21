@@ -1,10 +1,12 @@
-from modeling_gemma import PaliGemmaForConditionalGeneration, PaliGemmaConfig
-from transformers import AutoTokenizer
-import json
 import glob
-from safetensors import safe_open
-from typing import Tuple
+import json
 import os
+from typing import Tuple
+
+from modeling_gemma import PaliGemmaConfig, PaliGemmaForConditionalGeneration
+from safetensors import safe_open
+from transformers import AutoTokenizer
+
 
 def load_hf_model(model_path: str, device: str) -> Tuple[PaliGemmaForConditionalGeneration, AutoTokenizer]:
     # Load the tokenizer
@@ -22,7 +24,7 @@ def load_hf_model(model_path: str, device: str) -> Tuple[PaliGemmaForConditional
                 tensors[key] = f.get_tensor(key)
 
     # Load the model's config
-    with open(os.path.join(model_path, "config.json"), "r") as f:
+    with open(os.path.join(model_path, "config.json")) as f:
         model_config_file = json.load(f)
         config = PaliGemmaConfig(**model_config_file)
 

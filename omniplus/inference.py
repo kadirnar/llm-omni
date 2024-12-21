@@ -1,9 +1,8 @@
-from PIL import Image
-import torch
 import fire
-
-from processing_paligemma import PaliGemmaProcessor
+import torch
 from modeling_gemma import KVCache, PaliGemmaForConditionalGeneration
+from PIL import Image
+from processing_paligemma import PaliGemmaProcessor
 from utils import load_hf_model
 
 
@@ -12,9 +11,7 @@ def move_inputs_to_device(model_inputs: dict, device: str):
     return model_inputs
 
 
-def get_model_inputs(
-    processor: PaliGemmaProcessor, prompt: str, image_file_path: str, device: str
-):
+def get_model_inputs(processor: PaliGemmaProcessor, prompt: str, image_file_path: str, device: str):
     image = Image.open(image_file_path)
     images = [image]
     prompts = [prompt]
@@ -71,9 +68,7 @@ def test_inference(
             break
         # Append the next token to the input
         input_ids = next_token.unsqueeze(-1)
-        attention_mask = torch.cat(
-            [attention_mask, torch.ones((1, 1), device=input_ids.device)], dim=-1
-        )
+        attention_mask = torch.cat([attention_mask, torch.ones((1, 1), device=input_ids.device)], dim=-1)
 
     generated_tokens = torch.cat(generated_tokens, dim=-1)
     # Decode the generated tokens
@@ -121,7 +116,6 @@ def main(
 
     print("Device in use: ", device)
 
-    print(f"Loading model")
     model, tokenizer = load_hf_model(model_path, device)
     model = model.to(device).eval()
 

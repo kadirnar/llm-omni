@@ -1,7 +1,8 @@
-from typing import Dict, List, Optional, Union, Tuple, Iterable
+from typing import Dict, Iterable, List, Optional, Tuple, Union
+
 import numpy as np
-from PIL import Image
 import torch
+from PIL import Image
 
 IMAGENET_STANDARD_MEAN = [0.5, 0.5, 0.5]
 IMAGENET_STANDARD_STD = [0.5, 0.5, 0.5]
@@ -18,9 +19,7 @@ def add_image_tokens_to_prompt(prefix_prompt, bos_token, image_seq_len, image_to
     return f"{image_token * image_seq_len}{bos_token}{prefix_prompt}\n"
 
 
-def rescale(
-    image: np.ndarray, scale: float, dtype: np.dtype = np.float32
-) -> np.ndarray:
+def rescale(image: np.ndarray, scale: float, dtype: np.dtype = np.float32) -> np.ndarray:
     rescaled_image = image * scale
     rescaled_image = rescaled_image.astype(dtype)
     return rescaled_image
@@ -33,9 +32,7 @@ def resize(
     reducing_gap: Optional[int] = None,
 ) -> np.ndarray:
     height, width = size
-    resized_image = image.resize(
-        (width, height), resample=resample, reducing_gap=reducing_gap
-    )
+    resized_image = image.resize((width, height), resample=resample, reducing_gap=reducing_gap)
     return resized_image
 
 
@@ -59,9 +56,7 @@ def process_images(
     image_std: Optional[Union[float, List[float]]] = None,
 ) -> List[np.ndarray]:
     height, width = size[0], size[1]
-    images = [
-        resize(image=image, size=(height, width), resample=resample) for image in images
-    ]
+    images = [resize(image=image, size=(height, width), resample=resample) for image in images]
     # Convert each image to a numpy array
     images = [np.array(image) for image in images]
     # Rescale the pixel values to be in the range [0, 1]
@@ -89,9 +84,7 @@ class PaliGemmaProcessor:
         EXTRA_TOKENS = [
             f"<loc{i:04d}>" for i in range(1024)
         ]  # These tokens are used for object detection (bounding boxes)
-        EXTRA_TOKENS += [
-            f"<seg{i:03d}>" for i in range(128)
-        ]  # These tokens are used for object segmentation
+        EXTRA_TOKENS += [f"<seg{i:03d}>" for i in range(128)]  # These tokens are used for object segmentation
         tokenizer.add_tokens(EXTRA_TOKENS)
         self.image_token_id = tokenizer.convert_tokens_to_ids(self.IMAGE_TOKEN)
         # We will add the BOS and EOS tokens ourselves
@@ -129,8 +122,7 @@ class PaliGemmaProcessor:
                 bos_token=self.tokenizer.bos_token,
                 image_seq_len=self.image_seq_length,
                 image_token=self.IMAGE_TOKEN,
-            )
-            for prompt in text
+            ) for prompt in text
         ]
 
         # Returns the input_ids and attention_mask as PyTorch tensors
