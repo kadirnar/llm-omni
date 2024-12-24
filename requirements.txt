@@ -1,7 +1,13 @@
 torch
+torchvision
+torchaudio
 transformers
 huggingface-hub
 pillow
 fire
 tqdm
 termcolor
+wandb
+peft
+datasets
+matplotlib

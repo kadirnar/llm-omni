@@ -5,7 +5,7 @@ import torch
 from torch import nn
 from torch.nn import CrossEntropyLoss
 
-from omniplus.model.modeling_siglip import SiglipVisionConfig, SiglipVisionModel
+from omniplus.model.paligemma.modeling_siglip import SiglipVisionConfig, SiglipVisionModel
 
 
 class KVCache():
