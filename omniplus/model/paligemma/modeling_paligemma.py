@@ -6,7 +6,7 @@ from typing import Tuple
 from safetensors import safe_open
 from transformers import AutoTokenizer
 
-from omniplus.model.modeling_gemma import PaliGemmaConfig, PaliGemmaForConditionalGeneration
+from omniplus.model.paligemma.modeling_gemma import PaliGemmaConfig, PaliGemmaForConditionalGeneration
 
 
 def load_hf_model(model_path: str, device: str) -> Tuple[PaliGemmaForConditionalGeneration, AutoTokenizer]:
